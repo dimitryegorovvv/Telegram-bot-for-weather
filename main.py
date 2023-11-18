@@ -16,8 +16,10 @@ def start(message):
 def weather(message):
     city = message.text.strip().lower()
     res = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api}&units=metric')
-    data = json.load(res.text)
-    bot.send_message(message.chat.id, f'Сейчас в городе "{city}" {res.json()} градусов')
+    data = json.loads(res.text)
+    temp = data['main']['temp']
+    correct_temp = str(int(temp))
+    bot.send_message(message.chat.id, f'Сейчас в "{city}" {correct_temp} градус(а)(ов)')
 
 
 bot.polling(none_stop = True)
